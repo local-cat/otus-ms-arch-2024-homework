@@ -1,15 +1,8 @@
-FROM maven:3.8.3-openjdk-17 as builder
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
-WORKDIR /app
 
-COPY ./ /app
 
-RUN mvn clean deploy
-
-RUN mvn clean install -X
-
-FROM openjdk:17.0-jdk-slim as app
-
-COPY --from=build /app/target/*.jar /app.jar
-
-CMD java -jar /app.jar
