@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otus2024-deployment
+  labels:
+    app: webapp
+spec:
+  selector:
+    matchLabels:
+      app: otushw_app
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: otushw_app
+    spec:
+      containers:
+        - name: test-app
+          image: delqs/ohw2:latest
+          ports:
+            - containerPort: 8000
